@@ -1,0 +1,12 @@
+*
+.include 180nm_model.txt
+.include inv.txt
+vdd 1 0 dc 1.8
+vd 2 0 pulse(0 1.8 10n 0.1n 0.1n 20n 40n )
+vclk clk 0 pulse(0 1.8 8n 0.1n 0.1n 5n 10n)
+*   d g s b
+MN1 2 clk 4 0 N_180 w=2.5u l=0.18u
+Xinv2 4 5 inv
+Xinv3 5 6 inv
+.tran 0 100n
+*.print v(2) v(clk) v(5) v(8) v(9)

@@ -1,0 +1,40 @@
+*
+.include C:\Users\satyam\Desktop\LT Spice\180nm_model.txt
+vdd 1 0 dc 1.8
+* pulse_source pulse(Voff Von Delay Rise_time fall_time On_time time_period Cycles)
+v0 E 0 pulse(1.8 0 0n 0.1n 0.1n 10n 20n)
+v1 D 0 pulse(1.8 0 0n 0.1n 0.1n 20n 40n)
+v2 C 0 pulse(1.8 0 0n 0.1n 0.1n 40n 80n)
+v3 B 0 pulse(1.8 0 0n 0.1n 0.1n 80n 160n)
+v4 A 0 pulse(1.8 0 0n 0.1n 0.1n 160n 320n)
+* device_name Drain Gate source substrate Device_model channel_width channel Height
+*A not gate
+MP3 2 A 1 1 P_180 w=20u l=.18u
+MN3 2 A 0 0 N_180 w=5u l=.18u
+
+*BC NAND2
+MP0 3 B 1 1 P_180 w=20u l=.18u
+MP1 3 C 1 1 P_180 w=20u l=.18u
+
+MN0 3 B 4 0 N_180 w=5u l=.18u
+MN1 4 C 0 0 N_180 w=5u l=.18u
+
+*DE NAND2
+MP4 5 D 1 1 P_180 w=20u l=.18u
+MP5 5 E 1 1 P_180 w=20u l=.18u
+
+MN4 5 D 6 0 N_180 w=5u l=.18u
+MN5 6 E 0 0 N_180 w=5u l=.18u
+
+*output NAND3
+MP7 f 2 1 1 P_180 w=20u l=.18u
+MP8 f 3 1 1 P_180 w=20u l=.18u
+MP9 f 5 1 1 P_180 w=20u l=.18u
+
+MN7 f 2 7 0 N_180 w=5u l=.18u
+MN8 7 3 8 0 N_180 w=5u l=.18u
+MN9 8 5 0 0 N_180 w=5u l=.18u
+
+.tran 0 320n
+*.dc va 0 1.8
+.print tran v(f) v(A) v(B) v(C) v(D) v(E)

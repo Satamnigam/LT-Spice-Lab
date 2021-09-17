@@ -1,0 +1,14 @@
+*
+.include 180nm_model.txt
+.include inv.txt
+Vclk clk 0 PULSE(0 1.8 10n 100p 100p 4n 8n)
+Vd di 0 PULSE(0 1.8 0 100p 100p 20n 40n)
+vdd vdd 0 DC 1.8v
+
+MN1 di clkb q1 0 N_180 w=2.5u l=.18u
+xinv0 q1 q1bar inv
+MN2 q1bar clk q2 0 N_180 w=2.5u l=.18u
+xinv1 q2 q2bar inv
+xinv2 clk clkb inv
+
+.tran 0 100n

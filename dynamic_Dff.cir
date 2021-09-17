@@ -1,0 +1,36 @@
+
+*
+.include 180nm_model.txt
+.include inv.txt
+
+vclk clk 0 pulse(0 1.8 0n 0.1n 0.1n 2n 4n)
+vd din 0 pulse(0 1.8 0n 0.1n 0.1n 10n 20n)
+
+Xinv1 din dbar inv
+Xinv2 clk clkbr inv
+MN0 dbar clk x 0 N_180 w=4u l=.18u
+MN1 dbar clkbr y 0 N_180 w=4u l=.18u
+
+
+Xinv3 x xbar inv
+Xinv4 y ybar inv
+
+MN2 xbar clkbr g 0 N_180 w=4u l=.18u
+MN3 ybar clk g 0 N_180 w=4u l=.18u
+
+Xinv5 g Qbar inv
+Xinv6 Qbar Q inv
+
+.trans 0 25n
+
+.measure tran tpra
++ TRIG V(clk) VAL = '1.8/2' RISE = 1
++ TARG V(Q) VAL = '1.8/2' FALL = 1
+.measure tran tpfa
++ TRIG V(clk) VAL = '1.8/2' FALL = 1
++ TARG V(Q) VAL = '1.8/2' RISE = 1
+
+.meas tran avg_tpda param=(tpra+tpfa)/2p
+.meas tran vd param = v(din)
+.MEAS TRAN avgcurr AVG Ix(inv2:S) FROM = 11.9983ns TO = 12.1021ns
+.measure tran Power_dissipation param = (v(din)*avgcurr)

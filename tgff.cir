@@ -1,0 +1,41 @@
+
+*
+.include 180nm_model.txt
+.include inv.txt
+.subckt tgff clk t q
+
+xinv0 clk clkb inv
+xinv1 t tb inv
+
+MP1 1 q t vdd P_180 w=2.5u l=.18u
+MN1 t 10 1 0 N_180 w=2.5u l=.18u
+
+MP2 1 10 tb vdd P_180 w=2.5u l=.18u
+MN2 tb q 1 0 N_180 w=2.5u l=.18u
+
+xinv2 1 2 inv
+
+MP3 3 clkb 2 vdd P_180 w=2.5u l=.18u
+MN3 2 clk 3 0 N_180 w=2.5u l=.18u
+
+MP4 4 6 vdd vdd P_180 w=5u l=.18u
+MP5 3 clk 4 vdd P_180 w=5u l=.18u
+MN4 3 clkb 5 0 N_180 w=2.5u l=.18u
+MN5 5 6 0 0 N_180 w=2.5u l=.18u
+
+xinv3 3 6 inv
+
+MP6 7 clk 6 vdd P_180 w=5u l=.18u
+MN6 6 clkb 7 0 N_180 w=2.5u l=.18u
+
+MP7 8 10 vdd vdd P_180 w=5u l=.18u
+MP8 7 clkb 8 vdd P_180 w=5u l=.18u
+MN7 7 clk 9 0 N_180 w=2.5u l=.18u
+MN8 9 10 0 0 N_180 w=2.5u l=.18u
+
+xinv4 7 10 inv
+
+xinv5 10 q inv
+vdd vdd 0 DC 1.8v
+
+.end

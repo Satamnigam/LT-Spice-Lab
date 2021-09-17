@@ -1,0 +1,16 @@
+
+.include 180nm_model.txt
+.include inverter_subckt.txt
+
+Vdd vdd 0 DC 1.8v
+M1 v1 va vdd vdd P_180 w=5u l=.18u
+M2 v1 vb vdd vdd P_180 w=5u l=.18u
+M3 v1 va v2 0 N_180 w=2.5u l=.18u
+M4 v2 vb 0 0 N_180 w=2.5u l=.18u
+
+Xinv1 v1 vout inverter_subckt
+
+VA va 0 PULSE( 0 1.8 6n 100p 100p 10n 20n)
+VB vb 0 PULSE( 0 1.8 20n 100p 100p 10n 20n)
+.tran 0 100n
+.end

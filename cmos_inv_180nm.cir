@@ -1,0 +1,18 @@
+*
+.include 180nm_model.txt
+M1 out in 1 1 P_180 w=5u l=.18u
+M2 out in 0 0 N_180 w=2.5u l=.18u
+Cl out 0 1ff
+Vdd 1 0 DC 1.8v
+Vin in 0 PULSE(0 1.8 2n 100p 100p 10n 20n)
+*.tran 0 100n
+.dc Vin 0 1.8V
+
+
+
+
+
+
+
+
+

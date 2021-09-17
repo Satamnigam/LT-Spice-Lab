@@ -1,0 +1,20 @@
+
+
+*
+.include 180nm_model.txt
+.include inv.txt
+.include tgff.txt
+
+xf0 clk t q0 tgff
+xf1 q0 t q1 tgff
+xf2 q1 t q2 tgff
+xf3 q2 t q3 tgff
+xf4 q3 t q4 tgff
+xf5 q4 t q5 tgff
+xf6 q5 t q6 tgff
+xf7 q6 t q7 tgff
+
+
+Vclk clk 0 PULSE(0 1.8 0n 100p 100p 5n 10n)
+Vt t 0 DC 1.8v
+.tran 0 2560n

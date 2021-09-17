@@ -1,0 +1,9 @@
+*
+.include 180nm_model.txt
+
+.subckt inverter_subckt Vin Vout
+
+M1 Vout Vin vdd vdd P_180 w=5u l=0.18u
+M2 Vout Vin 0 0 N_180 w=2.5u l=0.18u
+vdd vdd 0 DC 1.8v
+.end

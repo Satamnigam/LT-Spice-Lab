@@ -1,0 +1,37 @@
+*
+.include 180nm_model.txt
+.include inv.txt
+.param SUPPLY=1.8V
+vd 1 0 DC 1.8v
+va a 0 pulse(0 1.8 0n 0.5n 0.5n 10n 20n)
+vb b 0 pulse(0 1.8 6n 0.5n 0.5n 15n 30n)
+Xinv1 a abar inv
+Xinv2 b bbar inv
+MN0 b  abar  o   0   N_180 w=2.5u  l=0.18u
+MP0 o   a    b    1   P_180 w=5u  l=0.18u
+MN1 bbar  a   o   0   N_180 w=2.5u  l=0.18u
+MP1  o  abar  bbar 1  P_180 w=5u  l=0.18u
+Cl o 0 1ff
+.tran 0 100n
+*.print v(a) v(b) V(abar) v(bbar) v(o)
+.measure tran tphla
++ TRIG V(a) VAL = '1.8/2' FALL = 1
++ TARG V(o) VAL = '1.8/2' RISE = 2
+.meas tran tplha
++ TRIG V(a) VAL = '1.8/2' RISE = 2
++ TARG V(o) VAL = '1.8/2' FALL = 2
+.measure tran avg_tpda param=(tphla+tplha)/2p
+
+.meas tran tphlb
++ TRIG V(b) VAL = '1.8/2' FALL = 1
++ TARG V(o) VAL = '1.8/2' RISE = 3
+.meas tran tplhb
++ TRIG V(b) VAL = '1.8/2' RISE = 1
++ TARG V(o) VAL = '1.8/2' FALL = 1
+.measure tran avg_tpdb param=(tphlb+tplhb)/2p
+.MEAS TRAN avgcurr AVG Ix(inv1:S) FROM = 20ns TO = 20.5ns
+.measure tran Pd param = (v(1)*avgcurr)
+.meas tran PDPa param =(avg_tpda)*(Pd)
+.meas tran PDPb param =(avg_tpdb)*(Pd)
+.meas tran PDAPa param = ((Pd)*(avg_tpda)*5.4u*1u)
+.meas tran PDAPb param = ((Pd)*(avg_tpdb)*5.4u*1u)

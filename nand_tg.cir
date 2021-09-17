@@ -1,0 +1,16 @@
+
+*
+.include 180nm_model.txt
+.include inv.txt
+.include tg.txt
+
+va A 0 pulse(0 1.8 1n 0.1n 0.1n 20n 40n)
+vb B 0 pulse(0 1.8 2n 0.1n 0.1n 10n 20n)
+
+Xinv1 A Abar inv
+Xtg1 Abar B out tg
+
+Xinv2 B Bbar inv
+Xtg2 Bbar Bbar out tg
+
+.trans 0 100n
